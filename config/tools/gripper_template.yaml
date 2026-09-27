@@ -1,0 +1,15 @@
+profile:
+  id: gripper_template
+  kind: tool
+tool:
+  name: gripper_template
+  type: actuated
+  supported: false
+  reason: Supply calibrated gripper URDF, action driver and force/position limits.
+  compatible_robots: []
+  actuated: true
+  action_name: /gripper_controller/gripper_cmd
+  position_unit: m
+  effort_unit: N
+  max_effort: null
+settings: {}

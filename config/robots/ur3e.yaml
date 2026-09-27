@@ -1,0 +1,79 @@
+profile:
+  id: ur3e
+  kind: robot
+robot:
+  name: ur3e
+  label: Universal Robots UR3e
+  dry_run_only: true
+  dry_run_reason: UR scene imports the original runner but has no settled dynamic-glass monitor; guarded execution needs commissioning.
+  default_tool: ur3e_nozzle
+  description_file: robot/description/ur3e/ur3e.urdf
+  srdf_file: robot/moveit_config/ur3e/ur3e_nozzle.srdf
+  kinematics_file: robot/moveit_config/ur3e/kinematics.yaml
+  joint_limits_file: robot/moveit_config/ur3e/joint_limits.yaml
+  ompl_file: robot/moveit_config/ur3e/ompl_planning.yaml
+  moveit_controllers_file: robot/moveit_config/ur3e/moveit_controllers.yaml
+  rviz_file: robot/moveit_config/ur3e/moveit.rviz
+  world_joint_in_description: true
+  base_xyz_m: [0.0, 0.0, 0.05]
+  base_rpy_rad: [0.0, 0.0, 0.0]
+  isaac_runner_file: robot/adapters/ur3e_scene.py
+  isaac:
+    robot_prim: /World/ur3e_physics
+    robot_articulation_prim: /World/ur3e_physics/root_joint
+    joints_prim: /World/ur3e_physics/joints
+    tool_prim: /World/ur3e_physics/wrist_3_link/flange/tool0/nozzle_mount/nozzle_link
+    tool_parent_prim: /World/ur3e_physics/wrist_3_link
+    tcp_prim: /World/ur3e_physics/wrist_3_link/flange/tool0/nozzle_mount/nozzle_tip
+    guarded_execution_supported: false
+settings:
+  project:
+    planning_group: ur_manipulator
+    planning_frame: world
+    base_link: base_link
+    end_effector_link: nozzle_tip
+    joint_names: [shoulder_pan_joint, shoulder_lift_joint, elbow_joint, wrist_1_joint, wrist_2_joint, wrist_3_joint]
+  resources:
+    robot_urdf: robot/description/ur3e/ur3e.urdf
+    stage: ../old_step2/glass_robotarm/ur_e_0813_nozzle.usda
+  frame_transform:
+    robot_base_world_xyz_m: [0.0, 0.0, 0.05]
+    require_glass_snapshot: false
+  glass_settle:
+    robot_articulation_prim: /World/ur3e_physics/root_joint
+  cartesian_pose:
+    max_tilt_from_world_down_deg: 25.0
+    command_compensation:
+      enabled: false
+      world_xyz_mm: [0.0, 0.0, 0.0]
+  ik:
+    joint_lower_rad: [-6.283185307179586, -6.283185307179586, -3.141592653589793, -6.283185307179586, -6.283185307179586, -6.283185307179586]
+    joint_upper_rad: [6.283185307179586, 6.283185307179586, 3.141592653589793, 6.283185307179586, 6.283185307179586, 6.283185307179586]
+    initial_seeds_rad:
+      - [1.2718662602, -1.0653002840, 1.4827190019, -2.1247499917, -1.9864862800, 0.4577648393]
+      - [1.5707963300, -1.1000000000, 1.5000000000, -2.0000000000, -1.5707963300, -3.1415926500]
+      - [0.0, -1.5707963300, 1.5707963300, -1.5707963300, -1.5707963300, 0.0]
+  collision_scene:
+    worktable_size_m: [0.60, 0.45, 0.10]
+  time_parameterization:
+    travel_speed_mm_s: 15.0
+    minimum_segment_time_s: 0.008
+    velocity_limit_rad_s: [0.628319, 0.628319, 0.628319, 1.256637, 1.256637, 1.256637]
+    acceleration_limit_rad_s2: [0.50, 0.50, 0.50, 0.50, 0.50, 0.50]
+    jerk_limit_rad_s3: [5.0, 5.0, 5.0, 8.0, 8.0, 8.0]
+  controller:
+    action_name: /isaac_joint_trajectory_controller/follow_joint_trajectory
+    command_topic: /isaac_joint_command
+    state_topic: /isaac_joint_states
+    publish_rate_hz: 120.0
+    position_feedback_gain: 0.0
+    maximum_feedback_correction_rad: 0.004
+    feedback_filter_time_constant_s: 0.10
+    feedback_deadband_rad: 0.0005
+    state_timeout_s: 1.0
+    path_tolerance_rad: 0.020
+    path_tolerance_grace_s: 0.25
+  execution:
+    execute: false
+    return_to_initial_pose: false
+    initial_pose_rad: [0.0, -1.5707963300, 1.5707963300, -1.5707963300, -1.5707963300, 0.0]

@@ -1,0 +1,17 @@
+profile:
+  id: rv4fl_nozzle
+  kind: tool
+tool:
+  name: rv4fl_nozzle
+  type: fixed
+  supported: true
+  compatible_robots: [rv4fl]
+  actuated: false
+  parent_link: tool0
+  link: nozzle_link
+  tcp_link: nozzle_tcp
+  mesh_file: robot/description/tools/rv4fl_nozzle/nozzle.stl
+  mount_xyz_m: [0.0, 0.0, 0.0]
+  mount_rpy_rad: [0.0, 0.0, 0.0]
+  tcp_xyz_m: [0.0, 0.0, 0.065]
+settings: {}

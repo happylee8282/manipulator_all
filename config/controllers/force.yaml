@@ -1,0 +1,8 @@
+profile:
+  id: force
+  kind: controller
+control_mode:
+  name: force
+  supported: false
+  reason: Force control needs a commissioned force sensor, hardware interface and real-time loop; only numerical building blocks are included.
+settings: {}

@@ -1,0 +1,143 @@
+profile:
+  id: glass_following
+  kind: task
+task:
+  name: glass_following
+  events: []
+settings:
+  project:
+    root: ..
+  input:
+    step2_csv: path/data/step2_1_accurate_global_path.csv
+    step2_pcd: path/data/step2_1_accurate_global_path.pcd
+  output:
+    directory: output
+    cartesian_csv: cartesian_poses.csv
+    cartesian_archive: cartesian_poses.npz
+    cartesian_metrics: cartesian_pose_metrics.json
+    joint_archive: verified_joint_trajectory.npz
+    solver_metrics: moveit_solver_metrics.json
+    tracking_csv: tracking_result.csv
+    tracking_metrics: tracking_metrics.json
+    comparison_json: old_vs_new_comparison.json
+  resources:
+    glass_stl: ../step1_modelsolution/old_step2/glass_robotarm/AI Glass_Front.stl
+  frame_transform:
+    mesh_local_mm_to_world_m:
+      - [-0.0010000000149011617, 0.0, 0.0, -0.00010000000148933]
+      - [0.0, 0.0010000000149011615, 0.0, 0.4006679090447204]
+      - [0.0, 0.0, -0.0010000000149011615, 0.17626305315132607]
+      - [0.0, 0.0, 0.0, 1.0]
+    task_world_offset_m: [0.0, 0.0, 0.0]
+    glass_snapshot: runtime/glass_path_snapshot.json
+    require_glass_snapshot: true
+  glass_guard:
+    status_file: runtime/glass_monitor_status.json
+    command_file: runtime/glass_guard_command.json
+    status_timeout_s: 2.0
+    max_translation_mm: 0.10
+    max_rotation_deg: 0.10
+    poll_rate_hz: 20.0
+    abort_on_violation: true
+  glass_settle:
+    glass_prim: /World/AI_Glass_Front
+    glass_mesh_prim: /World/AI_Glass_Front/node_/mesh_
+    mass_kg: 0.050
+    maximum_linear_speed_m_s: 0.00005
+    maximum_angular_speed_deg_s: 0.10
+    maximum_translation_in_window_mm: 0.020
+    maximum_rotation_in_window_deg: 0.020
+    stable_duration_s: 3.0
+    timeout_s: 60.0
+  cartesian_pose:
+    interpolation_spacing_mm: 0.10
+    surface_offset_mm: 0.50
+    surface_offset_direction: surface_normal
+    surface_offset_profile:
+      enabled: false
+      mode: three_zone
+      axis: world_x
+      center_world_mm: 0.0
+      middle_offset_mm: 1.00
+      slope_entry_offset_mm: 1.50
+      steep_offset_mm: 2.0
+      middle_to_entry_start_abs_mm: 35.0
+      middle_to_entry_end_abs_mm: 45.0
+      entry_to_steep_start_abs_mm: 50.0
+      entry_to_steep_end_abs_mm: 60.0
+    world_up: [0.0, 0.0, 1.0]
+    nozzle_axis: +Z
+    preferred_nozzle_direction_world: [0.0, 0.0, -1.0]
+    max_tilt_from_world_down_deg: 45.0
+    cone_soft_transition_deg: 12.0
+    tangent_smoothing_window: 121
+    normal_smoothing_window: 121
+    roll_reference_world: [1.0, 0.0, 0.0]
+    roll_offset_deg: 45.0
+    approach_distance_mm: 20.0
+    retreat_distance_mm: 20.0
+    approach_resolution_mm: 2.0
+    endpoint_settle_time_s: 0.50
+    command_compensation:
+      enabled: false
+      world_xyz_mm: [0.0, 0.0, 0.0]
+  ik:
+    service: /compute_ik
+    fk_service: /compute_fk
+    state_validity_service: /check_state_validity
+    timeout_s: 0.20
+    avoid_collisions: true
+    max_joint_step_rad: 0.20
+    beam_width: 4
+    seeds_per_branch: 5
+    seed_perturbation_rad: 0.05
+    deduplicate_tolerance_rad: 0.00001
+    fk_position_tolerance_mm: 0.05
+    fk_orientation_tolerance_deg: 0.10
+    branch_refresh_interval: 100
+    cost:
+      joint_motion: 1.0
+      joint_acceleration: 0.25
+      joint_limit: 0.02
+      wrist_singularity: 0.08
+  collision_scene:
+    publish_glass: true
+    publish_floor: true
+    allow_nozzle_glass_contact: false
+    allowed_glass_link: nozzle_link
+    floor_center_world_m: [0.0, 0.0, -0.025]
+    floor_size_m: [10.0, 10.0, 0.05]
+    publish_worktable: true
+    worktable_center_world_m: [0.0, 0.40, 0.10]
+    worktable_size_m: [0.30, 0.10, 0.10]
+  non_contact_safety:
+    required: true
+    minimum_tcp_clearance_mm: 0.50
+    required_surface_offset_direction: surface_normal
+    require_uniform_clearance: true
+    uniform_clearance_tolerance_mm: 0.001
+    require_nozzle_glass_collision_check: true
+    require_isaac_sdf_collision: true
+    minimum_isaac_sdf_resolution: 1024
+    isaac_diagnostics_file: runtime/isaac_diagnostics.json
+  time_parameterization:
+    bonding_speed_mm_s: 3.0
+    verification_sample_period_s: 0.002
+    global_safety_scale: 1.03
+  controller:
+    publish_velocity_commands: true
+    velocity_feedforward_scale: 1.0
+    goal_tolerance_rad: 0.008
+    goal_time_tolerance_s: 5.0
+    diagnostics_file: runtime/controller_diagnostics.json
+  execution:
+    execute: false
+    require_initial_pose_tolerance_rad: 0.03
+    initial_pose_velocity_scaling: 0.05
+    initial_pose_acceleration_scaling: 0.05
+    require_start_tolerance_rad: 0.03
+    move_to_start_with_move_group: true
+    move_group_action: /move_action
+    start_velocity_scaling: 0.05
+    start_acceleration_scaling: 0.05
+    move_group_timeout_s: 120.0

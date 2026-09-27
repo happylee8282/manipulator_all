@@ -1,0 +1,8 @@
+profile:
+  id: impedance
+  kind: controller
+control_mode:
+  name: impedance
+  supported: false
+  reason: Impedance control needs a commissioned effort interface and robot dynamics; only numerical building blocks are included.
+settings: {}

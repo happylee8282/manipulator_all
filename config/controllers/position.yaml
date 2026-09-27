@@ -1,0 +1,8 @@
+profile:
+  id: position
+  kind: controller
+control_mode:
+  name: position
+  supported: true
+  description: Quintic trajectory with bounded filtered position feedback and velocity feedforward.
+settings: {}

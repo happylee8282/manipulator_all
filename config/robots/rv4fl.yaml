@@ -1,0 +1,72 @@
+profile:
+  id: rv4fl
+  kind: robot
+robot:
+  name: rv4fl
+  label: Mitsubishi RV-4FL
+  dry_run_only: false
+  default_tool: rv4fl_nozzle
+  description_file: robot/description/rv4fl/rv4fl.urdf
+  srdf_file: robot/moveit_config/rv4fl/rv4fl.srdf
+  kinematics_file: robot/moveit_config/rv4fl/kinematics.yaml
+  joint_limits_file: robot/moveit_config/rv4fl/joint_limits.yaml
+  ompl_file: robot/moveit_config/rv4fl/ompl_planning.yaml
+  moveit_controllers_file: robot/moveit_config/rv4fl/moveit_controllers.yaml
+  rviz_file: robot/moveit_config/rv4fl/moveit.rviz
+  world_joint_in_description: false
+  base_xyz_m: [0.0, 0.0, 0.05]
+  base_rpy_rad: [0.0, 0.0, 0.0]
+  isaac_runner_file: robot/adapters/rv4fl_scene.py
+  isaac:
+    robot_prim: /World/rv4fl
+    robot_articulation_prim: /World/rv4fl/root_joint
+    joints_prim: /World/rv4fl/joints
+    tool_prim: /World/rv4fl/link6/nozzle_mis_stl
+    tool_parent_prim: /World/rv4fl/link6
+    tcp_prim: /World/rv4fl/link6/nozzle_tcp
+    guarded_execution_supported: true
+settings:
+  project:
+    planning_group: manipulator
+    planning_frame: world
+    base_link: base_link
+    end_effector_link: nozzle_tcp
+    joint_names: [joint1, joint2, joint3, joint4, joint5, joint6]
+  resources:
+    robot_urdf: robot/description/rv4fl/rv4fl.urdf
+    stage: ../step1_modelsolution/rv-4fl_rev_B_step/rv4fl_ur_e_0813_nozzle.usda
+  frame_transform:
+    robot_base_world_xyz_m: [0.0, 0.0, 0.05]
+    require_glass_snapshot: true
+  glass_settle:
+    robot_articulation_prim: /World/rv4fl/root_joint
+  ik:
+    joint_lower_rad: [-4.188790205, -2.094395102, 0.0, -3.490658504, -2.094395102, -6.283185307]
+    joint_upper_rad: [4.188790205, 2.094395102, 2.862339973, 3.490658504, 2.094395102, 6.283185307]
+    initial_seeds_rad:
+      - [0.0, 0.0, 1.570796327, 0.0, 0.0, 0.0]
+      - [0.307695805, 1.539183265, 1.226771511, -1.283352991, -1.459456084, 1.930304831]
+      - [0.0, 1.20, 1.40, 0.0, -1.20, 0.0]
+      - [0.50, 1.00, 1.50, -1.00, -1.30, 1.50]
+      - [-0.50, 1.00, 1.50, 1.00, -1.30, -1.50]
+  time_parameterization:
+    travel_speed_mm_s: 10.0
+    minimum_segment_time_s: 0.010
+    velocity_limit_rad_s: [0.50, 0.50, 0.50, 0.70, 0.70, 0.70]
+    acceleration_limit_rad_s2: [0.35, 0.35, 0.35, 0.50, 0.50, 0.50]
+    jerk_limit_rad_s3: [9.0, 9.0, 9.0, 15.0, 15.0, 15.0]
+  controller:
+    action_name: /rv4fl_arm_controller/follow_joint_trajectory
+    command_topic: /isaac_joint_commands
+    state_topic: /isaac_joint_states
+    publish_rate_hz: 60.0
+    position_feedback_gain: 0.15
+    maximum_feedback_correction_rad: 0.004
+    feedback_filter_time_constant_s: 0.10
+    feedback_deadband_rad: 0.0005
+    state_timeout_s: 2.5
+    path_tolerance_rad: 0.100
+    path_tolerance_grace_s: 0.20
+  execution:
+    return_to_initial_pose: true
+    initial_pose_rad: [0.0, 0.0, 1.570796327, 0.0, 0.0, 0.0]

@@ -1,0 +1,11 @@
+profile:
+  id: real
+  kind: backend
+backend:
+  name: real
+  supported: false
+  simulation: false
+  reason: No manufacturer driver, hardware transport or commissioning procedure is configured.
+settings:
+  execution:
+    execute: false

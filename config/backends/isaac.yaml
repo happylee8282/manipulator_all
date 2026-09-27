@@ -1,0 +1,12 @@
+profile:
+  id: isaac
+  kind: backend
+backend:
+  name: isaac
+  supported: true
+  simulation: true
+  transport: JointState
+  python_executable: /home/happy/miniconda3/envs/env_isaaclab/bin/python
+  use_sim_time: false
+  ros_domain_id: auto
+settings: {}

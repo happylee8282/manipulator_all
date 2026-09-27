@@ -1,0 +1,11 @@
+profile:
+  id: nozzle
+  kind: tool
+tool:
+  name: nozzle
+  type: fixed
+  supported: true
+  compatible_robots: [rv4fl, ur3e]
+  actuated: false
+  geometry_source: Selected robot's assembled URDF and default_tool profile.
+settings: {}

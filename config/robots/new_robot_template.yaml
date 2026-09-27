@@ -1,0 +1,29 @@
+profile:
+  id: new_robot_template
+  kind: robot
+robot:
+  name: new_robot_template
+  dry_run_only: true
+  supported: false
+  reason: Fill and validate robot model, joint names, limits, MoveIt and backend before registration.
+  description_file: null
+  srdf_file: null
+  kinematics_file: null
+  joint_limits_file: null
+  ompl_file: null
+  moveit_controllers_file: null
+  default_tool: gripper_template
+settings:
+  project:
+    planning_group: manipulator
+    planning_frame: world
+    base_link: base_link
+    end_effector_link: tool_tcp
+    joint_names: []
+  ik:
+    joint_lower_rad: []
+    joint_upper_rad: []
+    initial_seeds_rad: []
+  execution:
+    execute: false
+    initial_pose_rad: []
