@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot name="rv4fl">
+  <!-- The fixed links tool0 -> nozzle_link -> nozzle_tcp are part of this
+       chain.  Only joint1..joint6 are active planning variables. -->
+  <group name="manipulator">
+    <chain base_link="base_link" tip_link="nozzle_tcp"/>
+  </group>
+
+  <group_state name="step_pose" group="manipulator">
+    <joint name="joint1" value="0"/>
+    <joint name="joint2" value="0"/>
+    <joint name="joint3" value="1.570796327"/>
+    <joint name="joint4" value="0"/>
+    <joint name="joint5" value="0"/>
+    <joint name="joint6" value="0"/>
+  </group_state>
+  <group_state name="zero" group="manipulator">
+    <joint name="joint1" value="0"/>
+    <joint name="joint2" value="0"/>
+    <joint name="joint3" value="0"/>
+    <joint name="joint4" value="0"/>
+    <joint name="joint5" value="0"/>
+    <joint name="joint6" value="0"/>
+  </group_state>
+
+  <virtual_joint name="world_joint" type="fixed"
+                 parent_frame="world" child_link="base_link"/>
+
+  <!-- Adjacent and CAD-overlapping pairs that cannot collide through joint
+       motion.  The mounted nozzle/link5 pair is disabled only at the flange
+       interface; the nozzle remains enabled against the rest of the robot
+       and against the MoveIt planning scene. -->
+  <disable_collisions link1="base_link" link2="link1" reason="Adjacent"/>
+  <disable_collisions link1="link1" link2="link2" reason="Adjacent"/>
+  <disable_collisions link1="link1" link2="link3" reason="Never"/>
+  <disable_collisions link1="link2" link2="link3" reason="Adjacent"/>
+  <disable_collisions link1="link2" link2="link4" reason="Never"/>
+  <disable_collisions link1="link3" link2="link4" reason="Adjacent"/>
+  <disable_collisions link1="link3" link2="link5" reason="Never"/>
+  <disable_collisions link1="link3" link2="link6" reason="Never"/>
+  <disable_collisions link1="link4" link2="link5" reason="Adjacent"/>
+  <disable_collisions link1="link4" link2="link6" reason="Never"/>
+  <disable_collisions link1="link5" link2="link6" reason="Adjacent"/>
+  <disable_collisions link1="link6" link2="tool0" reason="Adjacent"/>
+  <disable_collisions link1="tool0" link2="nozzle_link" reason="Adjacent"/>
+  <disable_collisions link1="link5" link2="nozzle_link" reason="Mounted"/>
+  <disable_collisions link1="nozzle_link" link2="nozzle_tcp" reason="Adjacent"/>
+</robot>

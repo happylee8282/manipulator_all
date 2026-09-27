@@ -1,0 +1,26 @@
+moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControllerManager
+
+trajectory_execution:
+  allowed_execution_duration_scaling: 1.5
+  # The Isaac adapter may hold the final position for up to 15 seconds while
+  # enforcing the strict joint tolerance.  Keep MoveIt's watchdog outside that
+  # controller-owned settling window so it does not cancel a healthy goal.
+  allowed_goal_duration_margin: 20.0
+  allowed_start_tolerance: 0.03
+  execution_duration_monitoring: true
+
+moveit_simple_controller_manager:
+  controller_names:
+    - isaac_joint_trajectory_controller
+
+  isaac_joint_trajectory_controller:
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - shoulder_pan_joint
+      - shoulder_lift_joint
+      - elbow_joint
+      - wrist_1_joint
+      - wrist_2_joint
+      - wrist_3_joint

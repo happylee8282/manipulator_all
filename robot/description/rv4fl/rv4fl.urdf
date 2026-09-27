@@ -1,0 +1,258 @@
+<?xml version="1.0"?>
+<!--
+  Mitsubishi RV-4FL articulated model derived from
+  rv-4fl_so-assy_gaikei_asm.stp.
+
+  Joint positions use Mitsubishi controller angles.  The source STEP pose is:
+  joint1=0, joint2=0, joint3=pi/2, joint4=0, joint5=0, joint6=0.
+
+  Joint ranges and velocities follow the Mitsubishi RV-4FL specifications.
+  Effort limits follow the open ROS melfa_description reference model and are
+  simulation parameters, not safety-rated actuator limits.  Link inertias are
+  uniform-density CAD estimates scaled to the published 41 kg total mass.
+-->
+<robot name="rv4fl">
+  <material name="melfa_white">
+    <color rgba="0.88 0.88 0.86 1.0"/>
+  </material>
+
+  <material name="melfa_dark">
+    <color rgba="0.16 0.18 0.20 1.0"/>
+  </material>
+
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.033175228 -0.008425809 0.094060658" rpy="0 0 0"/>
+      <mass value="14.942824847"/>
+      <inertia ixx="0.086387434" ixy="0.004681179" ixz="-0.003476326"
+               iyy="0.118603444" iyz="0.000886286" izz="0.119205229"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://lee_manipulator_part/robot/description/rv4fl/meshes/visual/link0.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="melfa_white"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://lee_manipulator_part/robot/description/rv4fl/meshes/collision/link0.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="link1">
+    <inertial>
+      <origin xyz="0.006990122 0.001052531 -0.062331055" rpy="0 0 0"/>
+      <mass value="6.432911799"/>
+      <inertia ixx="0.067101109" ixy="0.000101473" ixz="0.001940478"
+               iyy="0.039597667" iyz="-0.000276185" izz="0.048219935"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://lee_manipulator_part/robot/description/rv4fl/meshes/visual/link1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="melfa_white"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://lee_manipulator_part/robot/description/rv4fl/meshes/collision/link1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="link2">
+    <inertial>
+      <origin xyz="-0.015499336 0.000204315 0.103076923" rpy="0 0 0"/>
+      <mass value="9.732865483"/>
+      <inertia ixx="0.150013933" ixy="0.000095572" ixz="0.004741642"
+               iyy="0.138024138" iyz="-0.000447380" izz="0.035316416"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://lee_manipulator_part/robot/description/rv4fl/meshes/visual/link2.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="melfa_white"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://lee_manipulator_part/robot/description/rv4fl/meshes/collision/link2.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="link3">
+    <inertial>
+      <origin xyz="-0.019141867 -0.000256483 -0.003659160" rpy="0 0 0"/>
+      <mass value="3.927631034"/>
+      <inertia ixx="0.009941006" ixy="-0.000107059" ixz="0.000777923"
+               iyy="0.011962279" iyz="-0.000161736" izz="0.011192023"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://lee_manipulator_part/robot/description/rv4fl/meshes/visual/link3.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="melfa_white"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://lee_manipulator_part/robot/description/rv4fl/meshes/collision/link3.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="link4">
+    <inertial>
+      <origin xyz="0.000126912 0.001022575 -0.149751253" rpy="0 0 0"/>
+      <mass value="4.891803075"/>
+      <inertia ixx="0.035235966" ixy="0.000001406" ixz="0.000246276"
+               iyy="0.032992948" iyz="-0.000172824" izz="0.009558642"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://lee_manipulator_part/robot/description/rv4fl/meshes/visual/link4.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="melfa_white"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://lee_manipulator_part/robot/description/rv4fl/meshes/collision/link4.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- The STEP has one combined wrist solid, so its visible geometry moves
+       with J5.  J6 remains a valid simulated joint and rotates the flange/tool
+       frame, but has no independently visible CAD shell. -->
+  <link name="link5">
+    <inertial>
+      <origin xyz="0.001044222 -0.000007843 0.014120915" rpy="0 0 0"/>
+      <mass value="0.857571010"/>
+      <inertia ixx="0.001218525" ixy="0.000000280" ixz="-0.000024371"
+               iyy="0.001374597" iyz="0.000000095" izz="0.000749464"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://lee_manipulator_part/robot/description/rv4fl/meshes/visual/link5.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="melfa_white"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://lee_manipulator_part/robot/description/rv4fl/meshes/collision/link5.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="link6">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.214392753"/>
+      <inertia ixx="0.000028586" ixy="0" ixz="0"
+               iyy="0.000028586" iyz="0" izz="0.000042879"/>
+    </inertial>
+  </link>
+
+  <!-- tool0 is the J6 flange frame.  The nozzle transform below is copied
+       from env_modelsoultion.usd: identity pose with millimetre mesh scale. -->
+  <link name="tool0"/>
+
+  <link name="nozzle_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://lee_manipulator_part/robot/description/tools/rv4fl_nozzle/nozzle.stl"
+              scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="melfa_dark"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://lee_manipulator_part/robot/description/tools/rv4fl_nozzle/nozzle.stl"
+              scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- The STL extends to z=65 mm; this frame is the physical nozzle tip and
+       the MoveIt planning/Cartesian-path TCP. -->
+  <link name="nozzle_tcp"/>
+
+  <joint name="joint1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link1"/>
+    <origin xyz="0 0 0.350" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-4.188790205" upper="4.188790205"
+           effort="224.64" velocity="7.330382858"/>
+    <dynamics damping="0.7" friction="0.0"/>
+  </joint>
+
+  <joint name="joint2" type="revolute">
+    <parent link="link1"/>
+    <child link="link2"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-2.094395102" upper="2.094395102"
+           effort="263.25" velocity="5.864306287"/>
+    <dynamics damping="0.7" friction="0.0"/>
+  </joint>
+
+  <joint name="joint3" type="revolute">
+    <parent link="link2"/>
+    <child link="link3"/>
+    <origin xyz="0 0 0.310" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="0.0" upper="2.862339973"
+           effort="145.15" velocity="4.363323130"/>
+    <dynamics damping="0.7" friction="0.0"/>
+  </joint>
+
+  <joint name="joint4" type="revolute">
+    <parent link="link3"/>
+    <child link="link4"/>
+    <origin xyz="-0.050 0 0.335" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.490658504" upper="3.490658504"
+           effort="67.20" velocity="9.424777961"/>
+    <dynamics damping="0.7" friction="0.0"/>
+  </joint>
+
+  <joint name="joint5" type="revolute">
+    <parent link="link4"/>
+    <child link="link5"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-2.094395102" upper="2.094395102"
+           effort="29.12" velocity="10.873400256"/>
+    <dynamics damping="0.7" friction="0.0"/>
+  </joint>
+
+  <!-- Choosing a point 85 mm along the J6 roll axis places link6 at the
+       mechanical-interface plane visible in the supplied CAD. -->
+  <joint name="joint6" type="revolute">
+    <parent link="link5"/>
+    <child link="link6"/>
+    <origin xyz="0 0 0.085" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-6.283185307" upper="6.283185307"
+           effort="25.20" velocity="12.566370614"/>
+    <dynamics damping="0.7" friction="0.0"/>
+  </joint>
+
+  <joint name="tool0_fixed_joint" type="fixed">
+    <parent link="link6"/>
+    <child link="tool0"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="nozzle_mount_joint" type="fixed">
+    <parent link="tool0"/>
+    <child link="nozzle_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="nozzle_tcp_joint" type="fixed">
+    <parent link="nozzle_link"/>
+    <child link="nozzle_tcp"/>
+    <origin xyz="0 0 0.065" rpy="0 0 0"/>
+  </joint>
+</robot>

@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="ur3e_nozzle">
+  <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro"/>
+
+  <xacro:arg name="joint_limit_params" default="$(find ur_description)/config/ur3e/joint_limits.yaml"/>
+  <xacro:arg name="kinematics_params" default="$(find ur_description)/config/ur3e/default_kinematics.yaml"/>
+  <xacro:arg name="physical_params" default="$(find ur_description)/config/ur3e/physical_parameters.yaml"/>
+  <xacro:arg name="visual_params" default="$(find ur_description)/config/ur3e/visual_parameters.yaml"/>
+  <xacro:arg name="nozzle_mesh" default="package://lee_manipulator_part/robot/description/tools/ur3e_nozzle/nozzle.stl"/>
+
+  <link name="world"/>
+
+  <xacro:ur_robot
+    name="ur3e"
+    tf_prefix=""
+    parent="world"
+    joint_limits_parameters_file="$(arg joint_limit_params)"
+    kinematics_parameters_file="$(arg kinematics_params)"
+    physical_parameters_file="$(arg physical_params)"
+    visual_parameters_file="$(arg visual_params)"
+    safety_limits="false"
+    safety_pos_margin="0.15"
+    safety_k_position="20"
+    force_abs_paths="false">
+    <!-- Match /World/ur3e_physics, whose Isaac stage translation is Z=0.05 m. -->
+    <origin xyz="0 0 0.05" rpy="0 0 0"/>
+  </xacro:ur_robot>
+
+  <!--
+    The STL is authored in millimetres.  Its round mounting body spans
+    z=-7..20 mm and the nozzle points in local +Z.  Moving the mesh +7 mm
+    places its rear mounting face on tool0 while preserving tool0 +Z as the
+    nozzle direction.
+  -->
+  <link name="nozzle_link">
+    <visual>
+      <origin xyz="0 0 0.007" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(arg nozzle_mesh)" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="nozzle_metal">
+        <color rgba="0.63 0.63 0.63 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.007" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(arg nozzle_mesh)" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="tool0-nozzle" type="fixed">
+    <parent link="tool0"/>
+    <child link="nozzle_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- STL bounds become z=0..72 mm after the mounting offset. -->
+  <link name="nozzle_tip"/>
+  <joint name="nozzle-tip" type="fixed">
+    <parent link="nozzle_link"/>
+    <child link="nozzle_tip"/>
+    <origin xyz="0 0 0.072" rpy="0 0 0"/>
+  </joint>
+</robot>

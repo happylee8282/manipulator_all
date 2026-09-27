@@ -1,0 +1,27 @@
+# Mitsubishi-published velocity limits are retained.  Acceleration limits are
+# intentionally disabled because no authoritative values were supplied.
+joint_limits:
+  joint1:
+    has_velocity_limits: true
+    max_velocity: 7.330382858
+    has_acceleration_limits: false
+  joint2:
+    has_velocity_limits: true
+    max_velocity: 5.864306287
+    has_acceleration_limits: false
+  joint3:
+    has_velocity_limits: true
+    max_velocity: 4.363323130
+    has_acceleration_limits: false
+  joint4:
+    has_velocity_limits: true
+    max_velocity: 9.424777961
+    has_acceleration_limits: false
+  joint5:
+    has_velocity_limits: true
+    max_velocity: 10.873400256
+    has_acceleration_limits: false
+  joint6:
+    has_velocity_limits: true
+    max_velocity: 12.566370614
+    has_acceleration_limits: false
